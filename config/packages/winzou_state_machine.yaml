@@ -1,0 +1,28 @@
+# app/config/config.yml
+
+winzou_state_machine:
+    app_order:
+        class: App\Entity\Order
+        property_path: state            # property of your object holding the actual state (default is "state")
+        graph: simple                   # name of the graph (default is "default")
+        # list of all possible states:
+        states:
+            - cart
+            - addressed
+            - shipping_selected
+            - payment_selected
+            - completed
+        # list of all possible transitions:
+        transitions:
+            address:
+                from: [cart]
+                to: addressed
+            select_shipping:
+                from: [addressed]
+                to: shipping_selected
+            select_payment:
+                from: [shipping_selected]
+                to: payment_selected
+            complete:
+                from: [payment_selected]
+                to: completed
